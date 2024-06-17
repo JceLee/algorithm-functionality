@@ -46,7 +46,7 @@ const CodeVerification = () => {
         // 이미 입력된 값이 있을 때 클릭된 필드를 포커스 합니다.
         if (inputValues[0] === "") {
             inputRefs.current[0].focus();
-        } else if (inputValues[index] === "") {
+        } else if (inputValues[index] !== "") {
             inputRefs.current[index].focus();
         }
     };
@@ -80,10 +80,15 @@ const CodeVerification = () => {
         if (event.key === "Backspace") {
             setInputValues((prev) => {
                 const newValues = [...prev];
-                newValues[index] = "";
+                // 현재 필드가 비어 있지 않은 경우에만 값 삯제
+                if (newValues[index] !== "") {
+                    newValues[index] = "";
+                } else if (index > 0) {
+                    // 현재 필드가 비어 있는 경우에만 이전 필드로 포커스 이동
+                    inputRefs.current[index - 1].focus();
+                }
                 return newValues;
             });
-            if (index > 0) inputRefs.current[index - 1].focus();
         }
     };
 
