@@ -44,18 +44,48 @@ const CodeVerification = () => {
     // 각 입력 필드를 클릭할 때 호출됩니다.
     // 첫 입력 필드를 비워 두었을 때 첫 필드를 포커스 하거나
     // 이미 입력된 값이 있을 때 클릭된 필드를 포커스 합니다.
+    // console.log("handleDigitInputClick => ", index);
+    if (inputValues[0] === "") {
+      inputRefs.current[0].focus();
+    } else {
+      inputRefs.current[index].focus();
+    }
   };
 
   const handleInputChange = (index, value) => {
     // 입력 필드의 값이 변경될 때 호출됩니다.
     // 값을 변경하고, 올바른 코드가 입력되면 다음 단계로 이동합니다.
     // 잘못된 코드가 입력되면 isWrongCode를 true로 설정합니다.
+
+    const newInputValues = [...inputValues];
+    newInputValues[index] = value;
+    setInputValues(newInputValues);
+    // console.log("newInputValues => ", newInputValues);
+
+    if (CORRECT_CODE[index] == value && index < inputRefs.current.length - 1) {
+      inputRefs.current[index + 1].focus();
+      setIsWrongCode(false);
+    } else if (CORRECT_CODE[index] !== value) {
+      setIsWrongCode(true);
+    }
   };
 
   const handleKeyDown = (event, index) => {
     // 입력이 일어 날 때 호출이 됩니다.
     // 백스페이스 키를 누를 때 지워지도록 합시다.
     // 이전 필드로 포커스를 이동시킵니다.
+    if (event.key === "Backspace") {
+      event.preventDefault();
+      const newInputValues = [...inputValues];
+      if (inputValues[index] !== "") {
+        newInputValues[index] = "";
+      } else if (index > 0) {
+        inputRefs.current[index - 1].focus();
+        newInputValues[index - 1] = "";
+      }
+      setInputValues(newInputValues);
+      // console.log("newInputValues => ", newInputValues);
+    }
   };
 
   return (
