@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
-const PURCHASE_OPEN_TIME = new Date(new Date().getTime() + 30 * 1000);
+// const PURCHASE_OPEN_TIME = new Date(new Date().getTime() + 30 * 1000);
+const PURCHASE_OPEN_TIME = new Date(new Date().getTime() + 1000 * 1000);
 
 const TicketPurchase = () => {
     const [currentTime, setCurrentTime] = useState(new Date());
@@ -36,6 +37,21 @@ const TicketPurchase = () => {
         const minutes = Math.floor(seconds / 60);
         const hours = Math.floor(minutes / 60);
         const days = Math.floor(hours / 24);
+        // const seconds = Math.floor((diff / 1000) % 60);
+        // const minutes = Math.floor((diff / 1000 / 60) % 60);
+        // const hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+        // const days = Math.floor(diff / 1000 / 60 / 60 / 24);
+
+        console.log(
+            "분 =>",
+            minutes,
+            "초 =>",
+            seconds,
+            "시간 =>",
+            hours,
+            "일 =>",
+            days
+        );
 
         return { days, hours, minutes, seconds };
     };
