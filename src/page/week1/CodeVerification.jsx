@@ -43,13 +43,14 @@ const CodeVerification = () => {
   const handleDigitInputClick = (index) => {
     // 각 입력 필드를 클릭할 때 호출됩니다.
     // 첫 입력 필드를 비워 두었을 때 첫 필드를 포커스 하거나
-    // 이미 입력된 값이 있을 때 클릭된 필드를 포커스 합니다.
+    // 이미 입력된 값이 있을 때 비어있는 필드 중 첫번째 필드로 포커스 합니다.
+    // console.log("handleDigitInputClick => ", index);
   };
 
   const handleInputChange = (index, value) => {
     // 입력 필드의 값이 변경될 때 호출됩니다.
-    // 값을 변경하고, 올바른 코드가 입력되면 다음 단계로 이동합니다.
-    // 잘못된 코드가 입력되면 isWrongCode를 true로 설정합니다.
+    // 입력이 이뤄질 때마다 한칸 씩 다음 단계로 이동합니다.
+    // 마지막 필드에 입력이 되면 코드가 일치하는지 비교를 합시다. 잘못된 코드가 입력되면 isWrongCode를 true로 설정합니다.
   };
 
   const handleKeyDown = (event, index) => {
