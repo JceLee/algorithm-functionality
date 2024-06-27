@@ -21,7 +21,12 @@ ISO 형식의 타임스탬프 문자열 (예: "2024-06-23T12:00:00Z")
 경과 시간에 따라 적절한 포맷으로 문자열을 반환합니다.
 
 */
+// currentTime : Thu Jun 27 2024 15:17:29 GMT+0900 (야쿠츠크 표준시)
+
+import { useState } from "react";
 
 export const formatTimestamp = (timestamp) => {
+  const [currentTime, setCurrentTime] = useState(new Date());
+
   return timestamp;
 };
