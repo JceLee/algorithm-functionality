@@ -22,11 +22,30 @@ ISO 형식의 타임스탬프 문자열 (예: "2024-06-23T12:00:00Z")
 
 */
 // currentTime : Thu Jun 27 2024 15:17:29 GMT+0900 (야쿠츠크 표준시)
-
-import { useState } from "react";
+// timestamp 로 들어간 더미데이터가 new Date 로 변환시 +9시간 되어 나온다.
+// 시간 비교를 위해 isoTime 과 currentTime 의 포맷을 같게 만든다.
+// getTime() 사용해서 시간차를 계산 한다.
+// 밀리초 기준 : 1분 (60초 = 1000*60), 1시간 (60분 = 1000*60*60), 1일 (24시간 = 1000*60*60*24), 7일
 
 export const formatTimestamp = (timestamp) => {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const currentTime = new Date();
+  const isoTime = new Date(timestamp);
+  const isoCurrentTime = isoTime.getTime() - 1000 * 60 * 60 * 9; // 9시간 빼줘야 시차가 없어진다.
 
-  return timestamp;
+  const timeDifference = currentTime.getTime() - isoCurrentTime;
+
+  let timeDiffString;
+  if (timeDifference < 1000 * 60) {
+    timeDiffString = "30초 전";
+  } else if (timeDifference < 1000 * 60 * 60) {
+    timeDiffString = "5분 전";
+  } else if (timeDifference < 1000 * 60 * 60 * 24) {
+    timeDiffString = "2시간 전";
+  } else if (timeDifference < 1000 * 60 * 60 * 24 * 7) {
+    timeDiffString = "3일 전";
+  } else {
+    timeDiffString = "2024-06-16 09:00";
+  }
+
+  return timeDiffString;
 };
