@@ -61,5 +61,4 @@ const TimeAttack = () => {
         </section>
     );
 };
-
 export default TimeAttack;
