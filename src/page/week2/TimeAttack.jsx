@@ -24,17 +24,18 @@ const TimeAttack = () => {
         const hours = Math.floor((timeDiff / 1000 / 60 / 60) % 24);
         const days = Math.floor(timeDiff / 1000 / 60 / 60 / 24);
 
+        return { days, hours, minutes, seconds };
+    };
+
+    const remainingTime = getRemainingTime();
+
+    useEffect(() => {
         if (PURCHASE_OPEN_TIME <= currentTime) {
             setIsPurchaseAvailable(true);
         } else {
             setIsPurchaseAvailable(false);
         }
-
-        console.log(days);
-        return { days, hours, minutes, seconds };
-    };
-
-    const remainingTime = getRemainingTime();
+    }, [currentTime]);
 
     return (
         <section className="flex flex-col items-center justify-center w-full h-screen p-4 bg-section">
