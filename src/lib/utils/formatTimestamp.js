@@ -42,7 +42,7 @@ export const formatTimestamp = (timestamp) => {
       return `${days}일 전`;
     } else {
       const formattedDate = past.toISOString().slice(0, 10);
-      return `${formattedDate} ${past.toLocaleTimeString()}`;
+      return `${formattedDate} ${past.toLocaleTimeString().slice(0, 7)}`;
     }
   } else if (hours > 0) {
     return `${hours}시간 전`;

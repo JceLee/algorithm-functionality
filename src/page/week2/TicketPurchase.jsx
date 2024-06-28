@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const PURCHASE_OPEN_TIME = new Date(new Date().getTime() + 30 * 1000);
 

@@ -43,9 +43,14 @@ const CodeVerification = () => {
   // 각각 함수의 매개변수로 어떤 값이 들어오는지는 console 로 확인해봅시다.
   const handleDigitInputClick = (index) => {
     // 각 입력 필드를 클릭할 때 호출됩니다.
+    // console.log("handleDigitInputClick => ", index);
     // 첫 입력 필드를 비워 두었을 때 첫 필드를 포커스 하거나
     // 이미 입력된 값이 있을 때 비어있는 필드 중 첫번째 필드로 포커스 합니다.
-    console.log("handleDigitInputClick => ", index);
+    if (inputValues[0] === "") {
+      inputRefs.current[0].focus();
+    } else if (inputValues[index] !== "") {
+      inputRefs.current[index].focus();
+    }
   };
 
   const handleInputChange = (index, value) => {
@@ -53,17 +58,39 @@ const CodeVerification = () => {
     // 입력이 이뤄질 때마다 한칸 씩 다음 단계로 이동합니다.
     // 마지막 필드에 입력이 되면 코드가 일치하는지 비교를 합시다.
     // 잘못된 코드가 입력되면 isWrongCode를 true로 설정합니다.
-    console.log("handleInputChange => ", index, value);
-    setInputValues((prev) => prev.map((num, i) => (i === index ? value : num)));
-    if (index < inputValues.length) {
-      handleDigitInputClick(index + 1);
+    if (value !== "" && index < 5) {
+      inputRefs.current[index + 1].focus();
     }
+    setInputValues((prev) => {
+      const newValues = [...prev];
+      newValues[index] = value;
+
+      const joined = newValues.join("");
+      if (joined.length === 6 && joined === CORRECT_CODE) {
+        setStep(3);
+        setInputValues(["", "", "", "", "", ""]);
+      } else {
+        setIsWrongCode(true);
+      }
+      return newValues;
+    });
   };
 
   const handleKeyDown = (event, index) => {
     // 입력이 일어 날 때 호출이 됩니다.
     // 백스페이스 키를 누를 때 지워지도록 합시다.
     // 이전 필드로 포커스를 이동시킵니다.
+    if (event.key === "Backspace") {
+      setInputValues((prev) => {
+        const newValues = [...prev];
+        if (newValues[index] !== "") {
+          newValues[index] = "";
+        } else if (index > 0) {
+          inputRefs.current[index - 1].focus();
+        }
+        return newValues;
+      });
+    }
   };
 
   return (
