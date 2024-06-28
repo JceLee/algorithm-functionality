@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 const problems = [
   { week: "Week1", title: "CodeVerification", route: "week-1-1" },
   { week: "Week2", title: "CommentList", route: "week-2-1" },
-  { week: "Week2", title: "TicketPurchase", route: "week-2-2" }, // Add new problem
+  { week: "Week2", title: "TicketPurchase", route: "week-2-2" },
+  { week: "Week2", title: "TimeAttack", route: "week-2-time-attack" },
 ];
 
 export default function Home() {
