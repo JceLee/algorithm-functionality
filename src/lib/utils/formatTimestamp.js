@@ -31,17 +31,31 @@ const nowHour = now.getHours() < 10 ? `0${now.getHours()}` : now.getHours();
 const nowMinute = now.getMinutes();
 
 export const formatTimestamp = (timestamp) => {
-  const stampYear = timestamp.slice(0, 4);
-  const stampMonth = timestamp.slice(5, 7);
-  const stampDay = timestamp.slice(8, 10);
-  const stampHour = timestamp.slice(14, 16);
-  const stampMinute = timestamp.slice(17, 19);
+  //[feedback]
+  //slice 를 이용하는 방법이 잘못된 것은 아니나, 형식이 조금만 달라져도 오류가 발생할 수 있기에,
+
+  //timestamp 를 다시 Date 객체로 만들고
+  //거기에서 year, month, date, hour, minute 등의 데이터를 가지고 오시는 방법도 괜찮을거 같습니다.
+
+  const newTimestamp = new Date(timestamp);
+
+  const stampYear = newTimestamp.getFullYear();
+  const stampMonth = newTimestamp.getMonth() + 1;
+  const stampDay = newTimestamp.getDate();
+  const stampHour =
+    newTimestamp.getHours() < 10
+      ? `0${newTimestamp.getHours()}`
+      : newTimestamp.getHours();
+  const stampMinute =
+    newTimestamp.getMinutes() < 10
+      ? `0${newTimestamp.getMinutes()}`
+      : newTimestamp.getHours();
 
   if (
-    nowYear === +stampYear &&
-    nowMonth === +stampMonth &&
-    nowDay === +stampDay &&
-    nowHour === +stampHour
+    nowYear === stampYear &&
+    nowMonth === stampMonth &&
+    nowDay === stampDay &&
+    nowHour === stampHour
   ) {
     if (
       nowMinute > Number(stampMinute) &&
@@ -51,18 +65,17 @@ export const formatTimestamp = (timestamp) => {
     return "5분 전";
   }
 
-  if (
-    nowYear === +stampYear &&
-    nowMonth === +stampMonth &&
-    nowDay === +stampDay
-  ) {
+  if (nowYear === stampYear && nowMonth === stampMonth && nowDay === stampDay) {
     return "2시간 전";
   }
 
-  if (nowYear === +stampYear && nowMonth === +stampMonth) {
-    if (nowDay > Number(stampDay) && nowDay - Number(stampDay) < 7) {
-      return "3일 전";
-    }
+  if (
+    nowYear === stampYear &&
+    nowMonth === stampMonth &&
+    nowDay > stampDay &&
+    nowDay - stampDay < 7
+  ) {
+    return "3일 전";
   }
   return `${stampYear}-${stampMonth}-${stampDay} ${stampHour}:${stampMinute}`;
 };
