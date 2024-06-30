@@ -5,6 +5,8 @@ const problems = [
   { week: "Week2", title: "CommentList", route: "week-2-1" },
   { week: "Week2", title: "TicketPurchase", route: "week-2-2" },
   { week: "Week2", title: "TimeAttack", route: "week-2-time-attack" },
+  { week: "Week3", title: "ChangeListOrder", route: "week-3-1" },
+  { week: "Week3", title: "ChangeListOrderAdvanced", route: "week-3-2" },
 ];
 
 export default function Home() {
