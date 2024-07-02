@@ -4,7 +4,7 @@ const comments = [
   {
     id: 1,
     text: "이것은 첫 번째 댓글입니다.",
-    timestamp: "2024-06-23T12:00:00Z",
+    timestamp: "2024-06-18T09:55:00Z",
   },
   {
     id: 2,
