@@ -27,9 +27,11 @@ export const formatTimestamp = (timestamp) => {
   // 현재시간 가져오기
   const now = new Date();
   const past = new Date(timestamp);
+  console.log(now - past);
 
   // 현재 시간과 주어진 시간의 차이 계산하기
-  const diff = now - past;
+  // 단순히 '-'로 Date를 비교하면 사파리 브라우저에서 작동이 안될 수 있다.
+  const diff = now.getTime() - past.getTime();
 
   // 시간 단위별로 차이 계산하기
   const seconds = Math.floor(diff / 1000);
