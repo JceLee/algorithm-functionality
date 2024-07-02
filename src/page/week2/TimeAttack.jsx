@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const PURCHASE_OPEN_TIME = new Date(
-  new Date().getTime() + 24 * 60 * 60 * 1000 + 10 * 1000,
+  new Date().getTime() + 24 * 60 * 60 * 1000 + 10 * 1000
 );
 
 const TimeAttack = () => {
@@ -9,12 +9,36 @@ const TimeAttack = () => {
   const [isPurchaseAvailable, setIsPurchaseAvailable] = useState(false);
 
   // TODO 타이머를 여기서 구현해주세요
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // 1초마다 실행되는 setInterval을 설정한다.
+    const isTimePurchaseAvailable = setInterval(() => {
+      // 현재 시간을 currentTime에 계속 업데이트해준다.
+      setCurrentTime(new Date());
+      // 바로 currentTime이 변경되지 않기 때문에, 직접 new Date를 통해 현재 시간이 신청 오픈 시간(PURCHASE_OPEN_TIME)을 지났는지 확인한다.
+      if (PURCHASE_OPEN_TIME - new Date().getTime() <= 0) {
+        // 지났을 경우 신청 가능 상태로 변경한다.
+        setIsPurchaseAvailable(true);
+      }
+    }, 1000);
+    // 컴포넌트가 언마운트될 때 return 내에 clearInterval을 사용하여 타이머를 정리합니다.
+    return () => clearInterval(isTimePurchaseAvailable);
+  }, []);
 
   // TODO 남은 시간을 계산하고 표시해주는 로직입니다.
   // 남은 시간이 24시간 이상일 경우는 오픈 시간을 그대로 표시해주고
   // 24시간이 미만일 경우에는 몇 시 몇 분 몇 초 전 이라고 표시해주세요. e.g) 23시간 59분 3초전
-  const getRemainingTime = () => {};
+  const getRemainingTime = () => {
+    // PURCHASE_OPEN_TIME과 currentTime의 차이를 계산한 다음, 바로 해당 시간을 초로 계산하여 상수에 넣어준다.
+    // 일, 시간, 분 단위로도 변환한다.
+    const diff = PURCHASE_OPEN_TIME - currentTime.getTime();
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    // 계산된 일, 시간, 분, 초 값을 객체 형태로 반환한다.
+    return { seconds, minutes, hours, days };
+  };
 
   const remainingTime = getRemainingTime();
 
