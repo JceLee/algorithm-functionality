@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const PURCHASE_OPEN_TIME = new Date(
-  new Date().getTime() + 24 * 60 * 60 * 1000 + 10 * 1000,
+  new Date().getTime() + 24 * 60 * 60 * 1000 + 10 * 1000
 );
 
 const TimeAttack = () => {
@@ -9,12 +9,23 @@ const TimeAttack = () => {
   const [isPurchaseAvailable, setIsPurchaseAvailable] = useState(false);
 
   // TODO 타이머를 여기서 구현해주세요
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    setIsPurchaseAvailable(currentTime >= PURCHASE_OPEN_TIME);
+    return () => clearInterval(timer);
+  }, []);
 
   // TODO 남은 시간을 계산하고 표시해주는 로직입니다.
   // 남은 시간이 24시간 이상일 경우는 오픈 시간을 그대로 표시해주고
   // 24시간이 미만일 경우에는 몇 시 몇 분 몇 초 전 이라고 표시해주세요. e.g) 23시간 59분 3초전
-  const getRemainingTime = () => {};
+  const getRemainingTime = () => {
+    const diff = PURCHASE_OPEN_TIME - currentTime;
+    const seconds = Math.floor(diff / 1000) % 60; // 24시간 기준 초이기에 분의 나머지 값으로 할당하기
+    const minutes = Math.floor(diff / (1000 * 60)) % 60; // 24시간을 분으로 나타낸 것
+    const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    return { days, hours, minutes, seconds };
+  };
 
   const remainingTime = getRemainingTime();
 
