@@ -5,19 +5,41 @@ const ChangeListOrder = () => {
   const [pokemonData, setPokemonData] = useState(MOCK_DATA);
 
   // TODO '위로' 버튼을 눌렀을 때, 실행되는 로직을 작성합니다. 첫 번째 아이템은 위로 이동 할 수 없음을 기억해주세요!
-  const moveItemUp = () => {};
+  const moveItemUp = (i) => {
+    if (i === 0) return;
+
+    setPokemonData((prevPokemonData) => {
+      const newPokemonData = [...prevPokemonData];
+      [newPokemonData[i - 1], newPokemonData[i]] = [
+        newPokemonData[i],
+        newPokemonData[i - 1],
+      ];
+      return newPokemonData;
+    });
+  };
 
   // TODO '아래' 버튼을 눌렀을 때, 실행되는 로직을 작성합니다. 마지막 아이템은 아래로 이동 할 수 없음을 기억해주세요!
-  const moveItemDown = () => {};
+  const moveItemDown = (i) => {
+    if (i === pokemonData.length - 1) return;
+
+    setPokemonData((prevPokemonData) => {
+      const newPokemonData = [...prevPokemonData];
+      [newPokemonData[i], newPokemonData[i + 1]] = [
+        newPokemonData[i + 1],
+        newPokemonData[i],
+      ];
+      return newPokemonData;
+    });
+  };
 
   return (
     <div className="container mx-auto">
       <h2 className="w-full text-center py-10">리스트 순서 바꾸기</h2>
       <div className="flex flex-col gap-2">
         {/* TODO Index 도 필요하다면, 수정해주세요 */}
-        {pokemonData.map((pokemon) => (
+        {pokemonData.map((pokemon, index) => (
           <div
-            key={pokemon.id}
+            key={index}
             className="pokemon p-4 border rounded-lg flex justify-between"
           >
             <div>
@@ -32,14 +54,14 @@ const ChangeListOrder = () => {
               {/* TODO moveItemUp 함수에 매개변수로 넣어주고 싶은게 있으시면 추가 시키셔도 됩니다. */}
               <button
                 className="bg-brand h-10 p-2 rounded text-[#ffffff] font-bold"
-                onClick={() => moveItemUp()}
+                onClick={() => moveItemUp(index)}
               >
                 위로
               </button>
               {/* TODO moveItemDown 함수에 매개변수로 넣어주고 싶은게 있으시면 추가 시키셔도 됩니다. */}
               <button
                 className="bg-state-warning h-10 p-2 rounded text-[#ffffff] font-bold"
-                onClick={() => moveItemDown()}
+                onClick={() => moveItemDown(index)}
               >
                 아래로
               </button>
