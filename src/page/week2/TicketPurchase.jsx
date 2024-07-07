@@ -22,7 +22,7 @@ const TicketPurchase = () => {
   */
   const getRemainingTime = () => {};
 
-  const remainingTime = getRemainingTime();
+  const remainingTime = getRemainingTime() || 0;
 
   return (
     <section className="flex flex-col items-center justify-center w-full h-screen p-4 bg-section">
@@ -30,12 +30,6 @@ const TicketPurchase = () => {
         <div className="mb-2 text-2xl font-bold text-gray-700">티켓 구매</div>
         <div className="text-lg font-normal text-gray-600">
           구매 Open 시간: {PURCHASE_OPEN_TIME.toLocaleTimeString()}
-        </div>
-        <div className="text-lg font-normal mt-2 text-gray-600">
-          남은 시간:{" "}
-          {`${remainingTime.minutes < 10 ? "0" : ""}${remainingTime.minutes}:${
-            remainingTime.seconds < 10 ? "0" : ""
-          }${remainingTime.seconds}`}
         </div>
         <button
           className={`rounded-lg text-white px-4 py-2 w-full rounded font-bold mt-4 transition-colors duration-300 bg-gradient-to-r from-green-400 to-blue-500 ${
