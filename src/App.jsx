@@ -6,6 +6,7 @@ import TicketPurchase from "./page/week2/TicketPurchase.jsx";
 import TimeAttack from "./page/week2/TimeAttack.jsx";
 import ChangeListOrder from "./page/week3/ChangeListOrder.jsx";
 import ChangeListOrderAdvanced from "./page/week3/ChangeListOrderAdvanced.jsx";
+import FilterSortTable from "./page/week4/FilterSortTable.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/week-2-time-attack" element={<TimeAttack />} />{" "}
         <Route path="/week-3-1" element={<ChangeListOrder />} />{" "}
         <Route path="/week-3-2" element={<ChangeListOrderAdvanced />} />{" "}
+        <Route path="/week-4" element={<FilterSortTable />} />{" "}
       </Routes>
     </BrowserRouter>
   );
