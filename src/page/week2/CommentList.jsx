@@ -4,12 +4,12 @@ const comments = [
   {
     id: 1,
     text: "이것은 첫 번째 댓글입니다.",
-    timestamp: "2024-06-23T12:00:00Z",
+    timestamp: "2024-06-27T20:54:00Z",
   },
   {
     id: 2,
     text: "이것은 두 번째 댓글입니다.",
-    timestamp: "2024-06-23T11:59:00Z",
+    timestamp: "2024-06-27T20:00:00Z",
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const comments = [
   {
     id: 5,
     text: "이것은 다섯 번째 댓글입니다.",
-    timestamp: "2024-06-24T08:30:00Z",
+    timestamp: "2024-06-26T22:30:00Z",
   },
   {
     id: 6,
@@ -34,7 +34,7 @@ const comments = [
   {
     id: 7,
     text: "이것은 일곱 번째 댓글입니다.",
-    timestamp: "2024-06-23T23:00:00Z",
+    timestamp: "2024-06-13T23:00:00Z",
   },
 ];
 
