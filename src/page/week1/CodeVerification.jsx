@@ -45,18 +45,74 @@ const CodeVerification = () => {
     // 첫 입력 필드를 비워 두었을 때 첫 필드를 포커스 하거나
     // 이미 입력된 값이 있을 때 비어있는 필드 중 첫번째 필드로 포커스 합니다.
     // console.log("handleDigitInputClick => ", index);
+
+    // 비어있는 필드 중 첫번째 필드의 index를 찾는다.
+    const emptyIndex = inputValues.indexOf(
+      inputValues.find((value) => {
+        return value === "";
+      })
+    );
+    if (emptyIndex > -1) {
+      // 만약 비어있는 필드가 있다면 (-1 이상을 반환한다면) 해당 필드로 포커스를 이동한다.
+      inputRefs.current[emptyIndex].focus();
+    } else {
+      // 비어있는 필드가 없다면 (-1을 반환한다면) 마지막 필드로 포커스를 이동한다.
+      inputRefs.current[inputValues.length - 1].focus();
+    }
   };
 
   const handleInputChange = (index, value) => {
     // 입력 필드의 값이 변경될 때 호출됩니다.
     // 입력이 이뤄질 때마다 한칸 씩 다음 단계로 이동합니다.
     // 마지막 필드에 입력이 되면 코드가 일치하는지 비교를 합시다. 잘못된 코드가 입력되면 isWrongCode를 true로 설정합니다.
+
+    // inputValues를 새로 map을 통해 배열을 넣어준다. 이 때 현재 위치한 인덱스의 값을 입력한 값으로 바꿔준다.
+    setInputValues(
+      inputValues.map((cur, idx) => {
+        return index === idx ? value : cur;
+      })
+    );
+    if (index !== inputValues.length - 1) {
+      // 만약 입력한 필드의 다음 필드가 남아있다면, 포커스를 다음 필드로 이동한다.
+      inputRefs.current[index + 1].focus();
+    } else {
+      // 입력한 필드가 마지막 필드일 경우, 코드가 일치하는지 비교한다.
+      // 이 때 바로 inputValues가 마지막 입력값까지 가져오지 못했기에 inputValues에 입력값을 더해서 비교한다.
+      if (inputValues.join("") + value !== CORRECT_CODE) {
+        // 잘못된 코드가 입력되면 isWrongCode를 true로 설정한다.
+        setIsWrongCode(true);
+      } else {
+        // 제대로 코드가 입력되었다면 isWrongCode를 false로 설정한다.
+        setIsWrongCode(false);
+      }
+    }
   };
 
   const handleKeyDown = (event, index) => {
     // 입력이 일어 날 때 호출이 됩니다.
     // 백스페이스 키를 누를 때 지워지도록 합시다.
     // 이전 필드로 포커스를 이동시킵니다.
+
+    // 백스페이스 키를 눌렀을 경우,
+    if (event.keyCode === 8) {
+      if (inputValues[index] === "" && index > 0) {
+        // 현재 인덱스가 0이 아니고, 현재 필드의 값이 비었을 경우 (마지막 필드까지 전부 입력되지 않았을 경우) 이전 필드의 값을 삭제한다.
+        setInputValues(
+          inputValues.map((cur, idx) => {
+            return index - 1 === idx ? (cur = "") : cur;
+          })
+        );
+        // 포커스를 이전 필드로 이동한다.
+        inputRefs.current[index - 1].focus();
+      } else {
+        // 현재 필드의 값이 비어있지 않을 경우 (마지막 필드까지 입력이 완료되었을 경우) 현재 필드의 값을 삭제한다.
+        setInputValues(
+          inputValues.map((cur, idx) => {
+            return index === idx ? (cur = "") : cur;
+          })
+        );
+      }
+    }
   };
 
   return (
