@@ -1,4 +1,4 @@
-import { formatTimestamp } from "../../lib/utils/formatTimestamp.js";
+import { formatTimestamp } from "../../lib/utils/formatTimestamp";
 
 const comments = [
   {
