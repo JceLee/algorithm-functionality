@@ -6,27 +6,20 @@ const FilterSortTableAdvancedTimeAttack = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState(MOCK_DATA);
 
-  // TODO QueryParams 로직 구현 - 1
+  // TODO QueryParams 로직 구현 - 1: 현재 쿼리 문자열에서 필터와 정렬 값을 가져오는 로직을 작성하세요.
   const getQueryParams = () => {
-    return {
-      category: searchParams.get("category") || "All",
-      stock: searchParams.get("stock") || "All",
-      manufacturer: searchParams.get("manufacturer") || "All",
-      minPrice: searchParams.get("minPrice") || "",
-      maxPrice: searchParams.get("maxPrice") || "",
-      searchTerm: searchParams.get("searchTerm") || "",
-      sortField: searchParams.get("sortField") || null,
-      sortOrder: searchParams.get("sortOrder") || "asc",
-    };
+    // 현재 URL의 쿼리 문자열에서 필터와 정렬 값을 추출하는 코드를 작성합니다.
+    // 예: searchParams.get("category") || "All"
   };
 
-  // TODO QueryParams 로직 구현 - 2
-  const [filters, setFilters] = useState(getQueryParams());
+  // TODO QueryParams 로직 구현 - 2: 현재 쿼리 문자열에서 필터와 정렬 값을 상태로 설정하는 로직을 작성하세요.
+  const [filters, setFilters] = useState({});
 
-  // TODO QueryParams 로직 구현 - 3
+  // TODO QueryParams 로직 구현 - 3: 쿼리 문자열을 업데이트하고 필터 상태를 갱신하는 로직을 작성하세요.
   const updateQueryParams = (newFilters) => {
-    setSearchParams(newFilters);
-    setFilters(newFilters);
+    // 쿼리 문자열을 업데이트하고, 필터 상태를 갱신하는 코드를 작성합니다.
+    // 예: setSearchParams(newFilters);
+    //     setFilters(newFilters);
   };
 
   // TODO 필터 로직 구현
@@ -36,7 +29,6 @@ const FilterSortTableAdvancedTimeAttack = () => {
 
   // TODO 정렬 로직 구현
   const sortProducts = (products) => {
-    if (!filters.sortField) return products;
     return products;
   };
 
