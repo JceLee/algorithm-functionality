@@ -8,6 +8,7 @@ const problems = [
   { week: "Week3", title: "ChangeListOrder", route: "week-3-1" },
   { week: "Week3", title: "ChangeListOrderAdvanced", route: "week-3-2" },
   { week: "Week4", title: "FilterAndSort", route: "week-4" },
+  { week: "Week4", title: "Week4 Time Attack", route: "week-4-time-attack" },
 ];
 
 export default function Home() {
