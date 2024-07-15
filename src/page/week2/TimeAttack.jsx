@@ -8,13 +8,34 @@ const TimeAttack = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isPurchaseAvailable, setIsPurchaseAvailable] = useState(false);
 
-  // TODO 타이머를 여기서 구현해주세요
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      setCurrentTime(now);
 
-  // TODO 남은 시간을 계산하고 표시해주는 로직입니다.
-  // 남은 시간이 24시간 이상일 경우는 오픈 시간을 그대로 표시해주고
-  // 24시간이 미만일 경우에는 몇 시 몇 분 몇 초 전 이라고 표시해주세요. e.g) 23시간 59분 3초전
-  const getRemainingTime = () => {};
+      if (now >= PURCHASE_OPEN_TIME) {
+        setIsPurchaseAvailable(true);
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const getRemainingTime = () => {
+    const difference = PURCHASE_OPEN_TIME - currentTime;
+
+    if (difference <= 0) {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
+
+    const seconds = Math.floor((difference / 1000) % 60);
+    const minutes = Math.floor((difference / 1000 / 60) % 60);
+    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+
+    return { days, hours, minutes, seconds };
+  };
 
   const remainingTime = getRemainingTime();
 

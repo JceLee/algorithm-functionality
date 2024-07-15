@@ -5,14 +5,28 @@ const ChangeListOrderAdvanced = () => {
   const [pokemonData, setPokemonData] = useState(MOCK_DATA);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  // TODO '위로' 버튼을 눌렀을 때, 실행되는 로직을 작성합니다. 첫 번째 아이템은 위로 이동 할 수 없음을 기억해주세요!
-  const moveItemUp = () => {};
+  const moveItemUp = (index) => {
+    if (index === 0) return; // 첫 번째 아이템은 위로 이동할 수 없음
+    const newData = [...pokemonData];
+    const temp = newData[index];
+    newData[index] = newData[index - 1];
+    newData[index - 1] = temp;
+    setPokemonData(newData);
+  };
 
-  // TODO '아래' 버튼을 눌렀을 때, 실행되는 로직을 작성합니다. 마지막 아이템은 아래로 이동 할 수 없음을 기억해주세요!
-  const moveItemDown = () => {};
+  const moveItemDown = (index) => {
+    if (index === pokemonData.length - 1) return; // 마지막 아이템은 아래로 이동할 수 없음
+    const newData = [...pokemonData];
+    const temp = newData[index];
+    newData[index] = newData[index + 1];
+    newData[index + 1] = temp;
+    setPokemonData(newData);
+  };
 
-  // TODO 변경 완료가 되었을 떄 로직을 작성해 주세요.
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    // 변경 완료 로직 (필요에 따라 추가 작업 수행 가능)
+    toggleEditMode();
+  };
 
   const toggleEditMode = () => {
     setIsEditMode((prevState) => !prevState);
@@ -24,19 +38,15 @@ const ChangeListOrderAdvanced = () => {
       <div className="flex gap-2 justify-end pb-4">
         {isEditMode ? (
           <>
-            {/* TODO 취소가 눌렸을 때 단순히, toggleEdit 을 불러주기 싫을 수도 있을 것 같아요. 마음대로 리팩토링 하셔도 됩니다. */}
             <button
               className="bg-state-error h-10 p-2 rounded text-[#ffffff] font-bold"
               onClick={toggleEditMode}
             >
               취소
             </button>
-            {/* TODO 함수에 매개변수로 넣어주고 싶은게 있으시면 추가 시키셔도 됩니다. */}
             <button
               className="bg-section h-10 p-2 rounded text-[#ffffff] font-bold"
-              onClick={() => {
-                handleSubmit();
-              }}
+              onClick={handleSubmit}
             >
               완료
             </button>
@@ -51,8 +61,7 @@ const ChangeListOrderAdvanced = () => {
         )}
       </div>
       <div className="flex flex-col gap-2">
-        {/* TODO Index 도 필요하다면, 수정해주세요 */}
-        {pokemonData.map((pokemon) => (
+        {pokemonData.map((pokemon, index) => (
           <div
             key={pokemon.id}
             className="pokemon p-4 border rounded-lg flex justify-between"
@@ -67,17 +76,15 @@ const ChangeListOrderAdvanced = () => {
             </div>
             {isEditMode ? (
               <div className="flex gap-5 items-center">
-                {/* TODO moveItemUp 함수에 매개변수로 넣어주고 싶은게 있으시면 추가 시키셔도 됩니다. */}
                 <button
                   className="bg-brand h-10 p-2 rounded text-[#ffffff] font-bold"
-                  onClick={() => moveItemUp()}
+                  onClick={() => moveItemUp(index)}
                 >
                   위로
                 </button>
-                {/* TODO moveItemDown 함수에 매개변수로 넣어주고 싶은게 있으시면 추가 시키셔도 됩니다. */}
                 <button
                   className="bg-state-warning h-10 p-2 rounded text-[#ffffff] font-bold"
-                  onClick={() => moveItemDown()}
+                  onClick={() => moveItemDown(index)}
                 >
                   아래로
                 </button>

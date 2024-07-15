@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MOCK_DATA } from "./MOCK_DATA.js";
 import { Link, useSearchParams } from "react-router-dom";
 
@@ -6,30 +6,78 @@ const FilterSortTableAdvancedTimeAttack = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState(MOCK_DATA);
 
-  // TODO QueryParams 로직 구현 - 1: 현재 쿼리 문자열에서 필터와 정렬 값을 가져오는 로직을 작성하세요.
+  // QueryParams 로직 구현 - 1: 현재 쿼리 문자열에서 필터와 정렬 값을 가져오는 로직
   const getQueryParams = () => {
-    // 현재 URL의 쿼리 문자열에서 필터와 정렬 값을 추출하는 코드를 작성합니다.
-    // 예: searchParams.get("category") || "All"
+    return {
+      category: searchParams.get("category") || "All",
+      stock: searchParams.get("stock") || "All",
+      manufacturer: searchParams.get("manufacturer") || "All",
+      minPrice: searchParams.get("minPrice") || "",
+      maxPrice: searchParams.get("maxPrice") || "",
+      searchTerm: searchParams.get("searchTerm") || "",
+      sortField: searchParams.get("sortField") || "name",
+      sortOrder: searchParams.get("sortOrder") || "asc",
+    };
   };
 
-  // TODO QueryParams 로직 구현 - 2: 현재 쿼리 문자열에서 필터와 정렬 값을 상태로 설정하는 로직을 작성하세요.
-  const [filters, setFilters] = useState({});
+  // QueryParams 로직 구현 - 2: 현재 쿼리 문자열에서 필터와 정렬 값을 상태로 설정하는 로직
+  const [filters, setFilters] = useState(getQueryParams);
 
-  // TODO QueryParams 로직 구현 - 3: 쿼리 문자열을 업데이트하고 필터 상태를 갱신하는 로직을 작성하세요.
+  useEffect(() => {
+    setFilters(getQueryParams());
+  }, [searchParams]);
+
+  // QueryParams 로직 구현 - 3: 쿼리 문자열을 업데이트하고 필터 상태를 갱신하는 로직
   const updateQueryParams = (newFilters) => {
-    // 쿼리 문자열을 업데이트하고, 필터 상태를 갱신하는 코드를 작성합니다.
-    // 예: setSearchParams(newFilters);
-    //     setFilters(newFilters);
+    const updatedParams = {};
+    for (const key in newFilters) {
+      if (newFilters[key]) {
+        updatedParams[key] = newFilters[key];
+      }
+    }
+    setSearchParams(updatedParams);
+    setFilters(newFilters);
   };
 
-  // TODO 필터 로직 구현
+  // 필터 로직 구현
   const filterProducts = (products) => {
-    return products;
+    return products.filter((product) => {
+      if (filters.category !== "All" && product.category !== filters.category) {
+        return false;
+      }
+      if (filters.stock !== "All" && product.stock !== filters.stock) {
+        return false;
+      }
+      if (
+        filters.manufacturer !== "All" &&
+        product.manufacturer !== filters.manufacturer
+      ) {
+        return false;
+      }
+      if (filters.minPrice && product.price < parseFloat(filters.minPrice)) {
+        return false;
+      }
+      if (filters.maxPrice && product.price > parseFloat(filters.maxPrice)) {
+        return false;
+      }
+      if (
+        filters.searchTerm &&
+        !product.name.toLowerCase().includes(filters.searchTerm.toLowerCase())
+      ) {
+        return false;
+      }
+      return true;
+    });
   };
 
-  // TODO 정렬 로직 구현
+  // 정렬 로직 구현
   const sortProducts = (products) => {
-    return products;
+    return products.sort((a, b) => {
+      const order = filters.sortOrder === "asc" ? 1 : -1;
+      if (a[filters.sortField] < b[filters.sortField]) return -1 * order;
+      if (a[filters.sortField] > b[filters.sortField]) return 1 * order;
+      return 0;
+    });
   };
 
   const filteredProducts = filterProducts(products);
